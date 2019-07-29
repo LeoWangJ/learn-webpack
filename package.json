@@ -1,0 +1,28 @@
+{
+  "name": "learn-webpack",
+  "version": "1.0.0",
+  "description": "learn-webpack",
+  "main": "index.js",
+  "scripts": {
+    "watch": "NODE_ENV=development webpack --mode development  --watch",
+    "start": "NODE_ENV=development webpack --mode development ",
+    "bundle": "NODE_ENV=production webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeoWangJ/learn-webpack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeoWangJ/learn-webpack/issues"
+  },
+  "homepage": "https://github.com/LeoWangJ/learn-webpack#readme",
+  "dependencies": {
+    "save-dev": "^2.0.0",
+    "webpack": "^4.38.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.6"
+  }
+}
