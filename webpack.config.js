@@ -16,7 +16,7 @@ module.exports = {
         rules:[
             {
                 test: /\.css$/,
-                use: extractCSS.extract(['css-loader'])
+                use: extractCSS.extract(['css-loader','postcss-loader'])
             }
         ]
     },
