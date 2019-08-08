@@ -2,6 +2,7 @@ let path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractCSS = new ExtractTextPlugin('css/[name].css');
+const extractSCSS = new ExtractTextPlugin('scss/[name].scss');
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: {
@@ -26,11 +27,20 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: extractCSS.extract(['css-loader','postcss-loader'])
+            },
+            {
+                test: /\.(sass|scss)$/,
+                use:extractSCSS.extract([
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader'
+                ])
             }
         ]
     },
     plugins:[
-        extractCSS
+        extractCSS,
+        extractSCSS
     ]
 
 }
