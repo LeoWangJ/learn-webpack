@@ -10,10 +10,19 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
-        filename:'[name].bundle.js'
+        filename:'js/[name].js'
     },
     module:{
         rules:[
+            {
+                test: /\.html$/,
+                use:[{
+                    loader:'file-loader',
+                    options:{
+                        name: '[path][name].[ext]'
+                    }
+                }]
+            },
             {
                 test: /\.css$/,
                 use: extractCSS.extract(['css-loader','postcss-loader'])
