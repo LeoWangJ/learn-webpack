@@ -41,6 +41,12 @@ module.exports = {
     plugins:[
         extractCSS,
         extractSCSS
-    ]
-
+    ],
+    devServer:{
+        compress:true,
+        port:3000,
+        stats:{
+            cached:false
+        }
+    }
 }

@@ -6,6 +6,7 @@
   "scripts": {
     "watch": "NODE_ENV=development webpack --mode development  --watch",
     "start": "NODE_ENV=development webpack --mode development ",
+    "dev": "NODE_ENV=development webpack-dev-server --mode development --open",
     "bundle": "NODE_ENV=production webpack --mode production"
   },
   "repository": {
@@ -31,7 +32,8 @@
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
   },
   "browserslist": [
     "last 5 version",
