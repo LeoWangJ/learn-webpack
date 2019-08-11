@@ -1,6 +1,6 @@
 
-import '../scss/index.scss'
-import '../index.html'
+import 'scss/index.scss'
+import 'index.html'
 console.log('hellp')
 
 let test = () =>{

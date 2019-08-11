@@ -12,6 +12,15 @@ module.exports = {
         path: path.resolve(__dirname,'./dist'),
         filename:'js/[name].js'
     },
+    resolve:{
+        modules:[
+            path.resolve('src'),
+            path.resolve('src/js'),
+            path.resolve('src/scss'),
+            path.resolve('node_modules')
+        ],
+        extensions:['.js']
+    },
     module:{
         rules:[
             {
