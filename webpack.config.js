@@ -17,6 +17,7 @@ module.exports = {
             path.resolve('src'),
             path.resolve('src/js'),
             path.resolve('src/scss'),
+            path.resolve('src/img'),
             path.resolve('node_modules')
         ],
         extensions:['.js']
@@ -38,16 +39,29 @@ module.exports = {
             },
             {
                 test: /\.(sass|scss)$/,
-                use:extractCSS.extract([
+                use:[
+                    'style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
-                ])
+                ]
             },
             {
                 test: /\.js$/,
                 use:['babel-loader']
-            }
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                  {
+                    loader: 'url-loader',
+                    options: {
+                      limit: 50000,
+                      name:'[path][name].[ext]?[hash:8]'
+                    },
+                  },
+                ],
+            },
         ]
     },
     plugins:[
