@@ -5,8 +5,8 @@ const extractCSS = new ExtractTextPlugin('css/[name].css');
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: {
-       index: './js/index.js',
-       about: './js/about.js',
+       index: 'index',
+       about: 'about',
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
