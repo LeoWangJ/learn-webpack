@@ -2,6 +2,7 @@ let path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractCSS = new ExtractTextPlugin('css/[name].css');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack')
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -92,8 +93,13 @@ module.exports = {
     plugins:[
         extractCSS,
         new CopyPlugin([
-            { from: 'assest', to: 'assest' },
-          ]),
+            { from: 'assets', to: 'assets' },
+        ]),
+        new webpack.ProvidePlugin({
+            $:'jquery',
+            jQuery:'jquery',
+            'window.jQuery':'jquery'
+        })
     ],
     devServer:{
         compress:true,
