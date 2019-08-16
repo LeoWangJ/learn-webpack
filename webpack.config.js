@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractCSS = new ExtractTextPlugin('css/[name].css');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -12,7 +13,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
-        filename:'js/[name].js'
+        filename:'js/[name].js?[hash:8]'
     },
     resolve:{
         modules:[
@@ -26,15 +27,6 @@ module.exports = {
     },
     module:{
         rules:[
-            {
-                test: /\.html$/,
-                use:[{
-                    loader:'file-loader',
-                    options:{
-                        name: '[path][name].[ext]'
-                    }
-                }]
-            },
             {
                 test: /\.css$/,
                 use: extractCSS.extract(['css-loader','postcss-loader'])
@@ -99,6 +91,12 @@ module.exports = {
             $:'jquery',
             jQuery:'jquery',
             'window.jQuery':'jquery'
+        }),
+        new HtmlWebpackPlugin({
+            title: 'webpack練習',
+            filename: 'index.html',
+            template:'html/index.html',
+            chunks:['index']
         })
     ],
     devServer:{
