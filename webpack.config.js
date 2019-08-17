@@ -15,6 +15,18 @@ module.exports = {
         path: path.resolve(__dirname,'./dist'),
         filename:'js/[name].js?[hash:8]'
     },
+    optimization:{
+        splitChunks:{
+            cacheGroups: {
+                vendors: {
+                  test: /[\\/]node_modules[\\/]/,
+                  name: 'vendeor',
+                  chunks:'initial',
+                  enforce:true
+                }
+            }
+        }
+    },
     resolve:{
         modules:[
             path.resolve('src'),
@@ -96,7 +108,7 @@ module.exports = {
             title: 'webpack練習',
             filename: 'index.html',
             template:'html/index.html',
-            chunks:['index']
+            chunks:['vendeor','index']
         })
     ],
     devServer:{
