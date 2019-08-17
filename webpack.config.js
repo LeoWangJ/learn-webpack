@@ -4,6 +4,7 @@ const extractCSS = new ExtractTextPlugin('css/[name].css');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -40,6 +41,10 @@ module.exports = {
     module:{
         rules:[
             {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
                 test: /\.css$/,
                 use: extractCSS.extract(['css-loader','postcss-loader']),
                 include: path.resolve('src/css'),
@@ -48,13 +53,11 @@ module.exports = {
             {
                 test: /\.(sass|scss)$/,
                 use:[
-                    'style-loader',
+                    'vue-style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
-                ],
-                include: path.resolve('src/scss'),
-                exclude: path.resolve('node_modules')
+                ]
             },
             {
                 test: /\.js$/,
@@ -116,7 +119,8 @@ module.exports = {
             filename: 'index.html',
             template:'html/index.html',
             chunks:['vendeor','index']
-        })
+        }),
+        new VueLoaderPlugin()
     ],
     devServer:{
         compress:true,
