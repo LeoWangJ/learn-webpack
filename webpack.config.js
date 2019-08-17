@@ -41,7 +41,9 @@ module.exports = {
         rules:[
             {
                 test: /\.css$/,
-                use: extractCSS.extract(['css-loader','postcss-loader'])
+                use: extractCSS.extract(['css-loader','postcss-loader']),
+                include: path.resolve('src/css'),
+                exclude: path.resolve('node_modules')
             },
             {
                 test: /\.(sass|scss)$/,
@@ -50,11 +52,14 @@ module.exports = {
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
-                ]
+                ],
+                include: path.resolve('src/scss'),
+                exclude: path.resolve('node_modules')
             },
             {
                 test: /\.js$/,
-                use:['babel-loader']
+                use:['babel-loader'],
+                include: path.resolve('.')
             },
             {
                 test: /\.(png|jpg|gif)$/i,
@@ -64,7 +69,7 @@ module.exports = {
                     options: {
                       limit: 50000,
                       name:'[path][name].[ext]?[hash:8]'
-                    },
+                    }
                   },
                   {
                     loader: 'image-webpack-loader',
@@ -90,7 +95,9 @@ module.exports = {
                       }
                     }
                   }
-                ]
+                ],
+                include: path.resolve('src/img'),
+                exclude: path.resolve('node_modules')
             },
         ]
     },
