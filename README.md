@@ -4,9 +4,9 @@
 
 ### loaders
 
-1. [編譯高版本的JS](#一.編譯高版本的JS)
-2. [在js中編譯scss,並使css有兼容性](#二.在js中編譯scss並使css有兼容性)
-3. [各種圖片檔進行壓縮或使用base64](#三.載入各種圖片檔以及進行壓縮或使用base64)
+1. [編譯高版本的JS](#編譯高版本的JS)
+2. [在js中編譯scss,並使css有兼容性](#在js中編譯scss並使css有兼容性)
+3. [各種圖片檔進行壓縮或使用base64](#載入各種圖片檔以及進行壓縮或使用base64)
 
 ### 開發細節處理
 
@@ -23,7 +23,7 @@
 
 # 介紹
 
-### 一.編譯高版本的JS
+### 編譯高版本的JS
 
 我們使用babel來編譯一些高版本的JS,例如:ES6,ES7等...  
 先讓我們安裝babel套件
@@ -48,7 +48,7 @@
 
 可以至[babel官網](https://babeljs.io/docs/en/presets?target="_blank")查看presets的各種設定。
 
-### 二.在js中編譯scss並使css有兼容性
+### 在js中編譯scss並使css有兼容性
 
 ##### 1. 在js中編譯scss
 我們需要安裝在node環境下能夠編譯scss的套件以及將scss轉成css的套件
@@ -110,7 +110,7 @@ module.exports = {
 ```
 postcss-loader必須在css-loader解析之前執行,否則會無效。
 
-### 三.載入各種圖片檔以及進行壓縮或使用base64
+### 載入各種圖片檔以及進行壓縮或使用base64
 
 ##### 1. 載入各種圖片檔
 在網站中我們總是無法避免會使用圖檔的部分。  
