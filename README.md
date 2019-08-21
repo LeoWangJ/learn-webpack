@@ -5,7 +5,7 @@
 ### loaders
 
 1. [編譯高版本的JS](#編譯高版本的JS)
-2. [在js中編譯scss,並使css有兼容性](#在js中編譯scss,並使css有兼容性)
+2. [在js中編譯scss,並使css有兼容性](#在js中編譯scss並使css有兼容性)
 3. 各種圖片檔進行壓縮或使用base64
 
 ### 開發細節處理
@@ -48,9 +48,9 @@
 
 可以至[babel官網](https://babeljs.io/docs/en/presets?target="_blank")查看presets的各種設定。
 
-#### 在js中編譯scss,並使css有兼容性
+#### 在js中編譯scss並使css有兼容性
 
-#####1. 在js中編譯scss
+##### 1. 在js中編譯scss
 我們需要安裝在node環境下能夠編譯scss的套件以及將scss轉成css的套件
 
 > npm i -D node-sass sass-loader
@@ -110,4 +110,5 @@ module.exports = {
 ```
 postcss-loader必須在css-loader解析之前執行,否則會無效。
 
+#### 各種圖片檔進行壓縮或使用base64
 
