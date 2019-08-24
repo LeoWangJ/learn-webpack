@@ -11,7 +11,7 @@
 ### 開發細節處理
 
 1. [複製不需打包的檔案至dist資料夾中](#複製不需打包的檔案至dist資料夾中)
-2. 全局使用jQuery
+2. [全局使用jQuery](#全局使用jQuery)
 3. 使用html template並且自動注入js檔
 4. 排除loader不需編譯的路徑
 5. 將node_module裡的套件打包至vendor.js
@@ -201,8 +201,8 @@ postcss-loader必須在css-loader解析之前執行,否則會無效。
 上面所設定的壓縮部分可以參考image-webpack-loader的[npm](https://www.npmjs.com/package/image-webpack-loader?target="_blank),在這就不進行詳細說明。
 
 ### 複製不需打包的檔案至dist資料夾中
-我們在開發時有時會有一些檔案是不需要經過loader就能夠使用的，我們所需要做的就是將該檔案移至打包後的檔案就可，那我們需要怎麼做呢？
-CopyWebpackPlugin可以解決我們這個需求
+我們在開發時有時會有一些檔案是不需要經過loader就能夠使用的，我們所需要做的就是將該檔案移至打包後的檔案就可，那我們需要怎麼做呢？  
+CopyWebpackPlugin可以解決我們這個需求  
 
 > npm i -D copy-webpack-plugin
 
@@ -218,5 +218,32 @@ plugins:[
 ]
 ```
 
-首先我們必須先載入額外的CopyWebpackPlugin模組，接著在webpack.config.js中的plugins添加該模組。
-在CopyWebpackPlugin模組中我們定義了 {from : 'assets', to: 'assets' } 這個物件，這個物件的意思是從開發中的assets資料夾移至打包後的assets資料夾
+首先我們必須先載入額外的CopyWebpackPlugin模組，接著在webpack.config.js中的plugins添加該模組。  
+在CopyWebpackPlugin中我們定義了 {from : 'assets', to: 'assets' } 這個物件，該物件的意思是我們從開發中的assets資料夾移至打包後的assets資料夾，這樣就完成了我們複製資料的功能了。  
+
+### 全局使用jQuery
+雖然現代開發網頁已經很少使用jQuery了，我們在這邊使用jQuery只是做為一個範例，你可以透過該種方式去引入你想要的套件。  
+但不太推薦將套件引入至全域，因為可能會有不避要的衝突，除非真的有需要。  
+我們透過webpack原本就提供的ProvidePlugin來實現全域引入的方式。  
+首先先下載jQeury
+
+> npm i --save jquery
+
+接著引入ProvidePlugin模組
+```js
+ var webpack = require('webpack')
+
+ plugins:[
+     new webpack.ProvidePlugin({
+         $: 'jquery',
+         jQuery: 'jquery',
+         'Window.jQuery': 'jquery'
+     })
+ ]
+
+ // index.js
+ $('#test').text('hello')
+```
+
+我們在ProvidePlugin中定義了$,jQuery,Window.jQuery,這三個名稱，指的是我們可以在全域中使用這三個名稱來呼叫jquery。  
+此時你可以在自己的js檔中使用jQuery而不用再使用import方式去載入。  
