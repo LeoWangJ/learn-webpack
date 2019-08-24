@@ -10,7 +10,7 @@
 
 ### 開發細節處理
 
-1. 複製不需打包的檔案至dist資料夾中
+1. [複製不需打包的檔案至dist資料夾中](#複製不需打包的檔案至dist資料夾中)
 2. 全局使用jQuery
 3. 使用html template並且自動注入js檔
 4. 排除loader不需編譯的路徑
@@ -200,3 +200,23 @@ postcss-loader必須在css-loader解析之前執行,否則會無效。
 ```
 上面所設定的壓縮部分可以參考image-webpack-loader的[npm](https://www.npmjs.com/package/image-webpack-loader?target="_blank),在這就不進行詳細說明。
 
+### 複製不需打包的檔案至dist資料夾中
+我們在開發時有時會有一些檔案是不需要經過loader就能夠使用的，我們所需要做的就是將該檔案移至打包後的檔案就可，那我們需要怎麼做呢？
+CopyWebpackPlugin可以解決我們這個需求
+
+> npm i -D copy-webpack-plugin
+
+安裝後我們來看要怎麼使用
+
+```js
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+
+plugins:[
+    new CopyWebpackPlugin([
+        {from : 'assets', to: 'assets' } 
+    ])
+]
+```
+
+首先我們必須先載入額外的CopyWebpackPlugin模組，接著在webpack.config.js中的plugins添加該模組。
+在CopyWebpackPlugin模組中我們定義了 {from : 'assets', to: 'assets' } 這個物件，這個物件的意思是從開發中的assets資料夾移至打包後的assets資料夾
