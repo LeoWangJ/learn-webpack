@@ -272,7 +272,7 @@ plugins:[
 3. template: 我們要套用的html
 4. chunks: 動態添加的JS檔
 
-接著來看我們要套用的html
+接著來看我們要套用的index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -289,6 +289,7 @@ plugins:[
 </html>
 ```
 <%=htmlWebpackPlugin.options.title%>就是對應到我們在plugins有使用到的title參數，另一個要注意的點就是我們在這邊並未手動輸入打包後的JS檔。  
+至於要多頁面設定的話可以複製多個HtmlWebpackPlugin設定。  
 
 ### 排除loader不需編譯的路徑
 
