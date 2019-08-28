@@ -12,13 +12,13 @@
 
 1. [複製不需打包的檔案至dist資料夾中](#複製不需打包的檔案至dist資料夾中)
 2. [全局使用jQuery](#全局使用jQuery)
-3. 使用html template並且自動注入js檔
-4. 排除loader不需編譯的路徑
-5. 將node_module裡的套件打包至vendor.js
+3. [使用html的template並且自動注入js檔](#使用html的template並且自動注入js檔)
+4. [排除loader不需編譯的路徑](#排除loader不需編譯的路徑)
+5. [將node_module裡的套件打包至vendor.js](#將node_module裡的套件打包至vendor.js)
 
 ### 建置前端框架環境
 
-1. vue框架環境
+1. [vue框架環境](#vue框架環境)
 
 
 # 介紹
@@ -247,3 +247,51 @@ plugins:[
 
 我們在ProvidePlugin中定義了$,jQuery,Window.jQuery,這三個名稱，指的是我們可以在全域中使用這三個名稱來呼叫jquery。  
 此時你可以在自己的js檔中使用jQuery而不用再使用import方式去載入。  
+
+### 使用html的template並且自動注入js檔
+假如你的專案是使用多頁面的方式來進行開發，這樣可能有遇過一個問題就是有共用的JS檔時或者meta,title之類的名稱時，你都要手動去添加在各個html上，但webpack有提供一個套件能夠讓我們解決這個問題並且將打包後的JS可以自動注入JS當中。  
+
+> npm i -D webpack-html-plugin
+
+```js
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+plugins:[
+    new HtmlWebpackPlugin({
+        title: 'webpack練習',
+        filename: 'index.html',
+        template:'html/index.html',
+        chunks:['index']
+    }),
+]
+```
+首先必須先引用html-webpack-plugin這個套件並在plugins中使用。  
+我們添加了幾個參數:  
+1. title : 提供html使用的動態變數
+2. filename: 我們輸出後的檔案名稱
+3. template: 我們要套用的html
+4. chunks: 動態添加的JS檔
+
+接著來看我們要套用的html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
+```
+<%=htmlWebpackPlugin.options.title%>就是對應到我們在plugins有使用到的title參數，另一個要注意的點就是我們在這邊並未手動輸入打包後的JS檔。  
+
+### 排除loader不需編譯的路徑
+
+### 將node_module裡的套件打包至vendor.js
+
+### vue框架環境
