@@ -292,7 +292,40 @@ plugins:[
 至於要多頁面設定的話可以複製多個HtmlWebpackPlugin設定。  
 
 ### 排除loader不需編譯的路徑
+當webpack在處理loader時會在全部的資料夾進行搜索要編譯的相關檔名。  
+但我要編譯scss時，並不需要再跑到其他資料夾進行搜索，因為我已經將所有scss放到scss這個資料夾了，這時再跑去其他資料夾進行搜索會耗很多打包時間。
+有兩個參數可以使用:  
 
-### 將node_module裡的套件打包至vendor.js
+include: 只有在包含該路徑中的檔案才會進行搜索。  
+exclude: 搜索時排除該路徑的所有檔案。  
 
+```js
+{
+    test: /\.(scss|sass)$/,
+    use: extractCSS.extract(['css-loader','postcss-loader']),
+    include: path.resolve('src/scss'),
+    exclude: path.resolve('node_modules')
+},
+```
+註: 官方建議避免使用exclude，傾向只使用include。
+### 將node_modules裡的套件打包至vendor.js
+我們在開發模式時修改JS完畢後儲存，webpack會偵測是否有改變然後再進行編譯。  
+但有時我們只是小小的改動JS而已但編譯時間還是很長，這是因為我們在打包時連同node_modules裝的那些套件一起打包了。但重點是這些套件我們不需要每次都進行打包呀，除非它有變動。   
+為了加快我們每次編譯的速度，我們必須將node_modules套件抽出來打包至名為vendor.js的檔案中。
+
+```js
+optimization:{
+  splitChunks:{
+    cacheGroups: {
+        vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendeor',
+            chunks:'initial',
+            enforce:true
+        }
+    }
+  }
+},
+```
+官方有提供我們這個方法來對node_modules的套件進行打包。這樣我們就解決的開發時編譯很慢的問題。  
 ### vue框架環境
