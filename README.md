@@ -14,7 +14,7 @@
 2. [全局使用jQuery](#全局使用jQuery)
 3. [使用html的template並且自動注入js檔](#使用html的template並且自動注入js檔)
 4. [排除loader不需編譯的路徑](#排除loader不需編譯的路徑)
-5. [將node_module裡的套件打包至vendor.js](#將node_module裡的套件打包至vendor.js)
+5. [將node_module裡的套件打包至vendor.js](#將node_modules裡的套件打包至vendor.js)
 
 ### 建置前端框架環境
 
@@ -293,7 +293,7 @@ plugins:[
 
 ### 排除loader不需編譯的路徑
 當webpack在處理loader時會在全部的資料夾進行搜索要編譯的相關檔名。  
-但我要編譯scss時，並不需要再跑到其他資料夾進行搜索，因為我已經將所有scss放到scss這個資料夾了，這時再跑去其他資料夾進行搜索會耗很多打包時間。
+但我要編譯scss時，並不需要再跑到其他資料夾進行搜索，因為我已經將所有scss放到scss這個資料夾了，這時再跑去其他資料夾進行搜索會耗很多打包時間。
 有兩個參數可以使用:  
 
 include: 只有在包含該路徑中的檔案才會進行搜索。  
@@ -327,5 +327,75 @@ optimization:{
   }
 },
 ```
-官方有提供我們這個方法來對node_modules的套件進行打包。這樣我們就解決的開發時編譯很慢的問題。  
+官方有提供我們這個方法來對node_modules的套件進行打包。這樣我們就解決的開發時編譯很慢的問題，要記得在我們先前提到的HtmlWebpackPlugin的chunks添加vendor路徑。  
 ### vue框架環境
+
+我在使用vue時通常會使用CDN或者是vue cli 來建構vue的專案，但突然有一天很好奇vue是怎麼用webpack建構出開發環境的，所以就有了這個主題，接下來來介紹如何使用webpack建構出vue環境。
+
+先載入vue所需要的loader以及解析template。
+
+> npm i -D vue-loader vue-template-compiler vue-html-loader vue-style-loader
+  
+
+接著在載入vue：  
+
+> npm i -S vue 
+
+接著在src資料夾中新增App.vue與index.js
+
+```js
+// index.js
+import Vue from 'vue'
+import App from 'App.vue'
+
+
+new Vue({
+   'el':'#app',
+   render:(h)=> h(App)
+})
+```
+
+```js
+// App.vue
+<template>
+    <div id="test">{{data}}</div>
+</template>
+
+<script>
+export default{
+    data(){
+        return{
+            data: 'hello'
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+ #test{
+     color:red;
+ }
+</style>
+```
+
+記得在輸出的html新增id = app的DOM。  
+接著我們需要設定webpack，我們僅需要讓webpack認識.vue檔案以及新增一個plugins即可完成vue環境。
+```js
+//webpack.config.js
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+module:{
+    rules:[
+        {
+            test: /\.vue$/,
+            loader: 'vue-loader'
+        },
+    ]
+},
+plugins:[
+    new VueLoaderPlugin()
+]
+```
+
+其實這樣我們的vue就已經建構好了，是不是比想像中簡單呢？  
+
